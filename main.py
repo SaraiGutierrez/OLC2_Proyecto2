@@ -271,23 +271,29 @@ def main():
                     if varR_x == varR_y:
                         st.error('La variable dependiente no puede ser la misma que la independiente')
                     else:
+                        st.write("Redes Neuoranles")
+                    ## variable dependiente
+                    varR_y = st.selectbox('Seleccione una variable (y)',header)
+                    varR_x = st.selectbox('Seleccione una variable (x)',header)
+                    ## verificar si la variable dependiente es la misma que la independiente
+                    if varR_x == varR_y:
+                        st.error('La variable dependiente no puede ser la misma que la independiente')
+                    else:
                         # obtener columnas 
-                        x = np.asanyarray((table[varR_x]).values.reshape(-1, 1))
+                        #x = np.asanyarray((table[varR_x]).values.reshape(-1, 1))
+                        x = table[varR_x]
                         y = table[varR_y]
+                        # print("la coumna x: ", x)
+                        # print("la coumna y: ", y)
                         
                         X=x[:, np.newaxis]
                         X_train, X_test, y_train, y_test = train_test_split(X, y)
+                       
                         mlr = MLPRegressor(solver='lbfgs', alpha= 1e-5, hidden_layer_sizes=(3,3), random_state=1)
                         mlr.fit(X_train, y_train)
-                        
-                        print(mlr.score(X_train, y_train))
-                        print("PREDICCION", mlr.predict(20))
-                        #st.markdown("IMPRESION  ```"+str(mlr.score(X_train, y_train))+"    ``` ")
-
-                        # prediccion
-                        '''st.markdown("**Prediccion**")
-                        pRedes = st.number_input('Ingrese un valor de prediccion ', value=0)
-                        st.markdown(" Prediccion : ```" +str(mlr.predict([[pRedes]])) + "  ``` ")'''
+                        #print(mlr.score(X_train, y_train))
+                        #print("PREDICCION", mlr.predict(20))
+                        st.markdown("IMPRESION  "+str(mlr.score(X_train, y_train))+"     ")
 
                   
                     
